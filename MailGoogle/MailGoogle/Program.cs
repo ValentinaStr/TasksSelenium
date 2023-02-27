@@ -1,6 +1,9 @@
 ﻿using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chromium;
+using System.Diagnostics;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace MailGoogle
 {
@@ -8,6 +11,13 @@ namespace MailGoogle
 	{
 		static void Main(string[] args)
 		{
+			var firstMail = "TSelenium101@gmail.com";
+			var password = "_SeLeNiuM_";
+			var seccondMail = "TSelenium102@gmail.com";
+			var termNewLetter = "(^_^)";
+			var textNewLetter = "wait you";
+			var textAnswer = "RE";
+
 			WebDriver driverGoogle = new ChromeDriver();
 
 			driverGoogle.Navigate().GoToUrl("https://www.google.com/intl/ru/gmail/about/");
@@ -15,34 +25,31 @@ namespace MailGoogle
 			HomePage home00 = new HomePage(driverGoogle);
 
 			LoginPage loginPage001 = home00.OpenLoginPage();
- 
-			loginPage001.InputEmailInLogin("TSelenium007");
-
-			loginPage001.InputPasswordInLogin("SELenium");
-
+			loginPage001.InputEmailInLogin(firstMail);
+			loginPage001.InputPasswordInLogin(password);
 			AccountMail mail001 = new AccountMail(driverGoogle);
-
-			mail001.CreateNewLetter("TSelenium001@gmail.com", "(^_^)");
-
+			mail001.CreateNewLetter(seccondMail, termNewLetter, textNewLetter);
 			mail001.Exit();
 
-			LoginPage loginPage007 = home00.OpenLoginPage();
+			Thread.Sleep(500);
 
-			loginPage007.InputEmailInLogin("TSelenium001");
+			LoginPage loginPage002 = home00.OpenLoginPage();
+			loginPage002.InputEmailInLogin(seccondMail);
+			loginPage002.InputPasswordInLogin(password);
 
-			loginPage007.InputPasswordInLogin("SELenium");
-
-			AccountMail mail007 = new AccountMail(driverGoogle);
-
-			mail007.OpenFirstLetter();
-			mail007.GetTermLetter();
-			mail007.AnswerLetter("Answer");
-
-			mail007.Exit();
+			AccountMail mail002 = new AccountMail(driverGoogle);
+			mail002.WaitLetter(termNewLetter, textNewLetter);
+			mail002.OpenFirstLetter();
+			mail002.CreateAnswerLetter(textAnswer);	
+			mail002.Exit();
+			
+			loginPage001.InputEmailInLogin(firstMail);
+			loginPage001.InputPasswordInLogin(password);
+			mail001.OpenFirstLetter();
+			var textAnswerFor1 =  mail001.GetTextLetter();
+			Console.WriteLine(textAnswerFor1);
 
 			driverGoogle.Close();
-
-			Console.WriteLine("End");
 
 		}
 	}

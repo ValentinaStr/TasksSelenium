@@ -15,24 +15,29 @@ namespace MailGoogle
 
 		public HomePage(IWebDriver driverGoogle)
 		{
-			_wait = new WebDriverWait(driverGoogle, TimeSpan.FromSeconds(30));
+			_wait = new WebDriverWait(driverGoogle, TimeSpan.FromSeconds(50));
 			_driverGoogle = driverGoogle;
 			_driverGoogle.Manage().Window.Maximize();
 		}
 
 		public LoginPage OpenLoginPage()
 		{
-			FindElementWhithWeiter(SITE_EMAIL_XPATH);
-			//Thread.Sleep(3000);
+			FindElementWhithWaiter(SITE_EMAIL_XPATH).Click();
+			//Thread.Sleep(500);
 			//_driverGoogle.FindElement(By.XPath(SITE_EMAIL_XPATH)).Click();
 			return new LoginPage(_driverGoogle);
 		}
 
-		public IWebElement FindElementWhithWeiter(string xpath)
+		public IWebElement FindElementWhithWaiter(string xpath)
 		{
 			_wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
 			return _driverGoogle.FindElement(By.XPath(xpath));
 		}
 
+		public IList<IWebElement> FindElementsWhithWeiter(string xpath)
+		{
+			_wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
+			return _driverGoogle.FindElements(By.XPath(xpath));
+		}
 	}
 }
