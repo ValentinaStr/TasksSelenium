@@ -23,8 +23,6 @@ namespace MailGoogle
 		public LoginPage OpenLoginPage()
 		{
 			FindElementWhithWaiter(SITE_EMAIL_XPATH).Click();
-			//Thread.Sleep(500);
-			//_driverGoogle.FindElement(By.XPath(SITE_EMAIL_XPATH)).Click();
 			return new LoginPage(_driverGoogle);
 		}
 
