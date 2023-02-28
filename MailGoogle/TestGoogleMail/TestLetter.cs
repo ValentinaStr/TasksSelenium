@@ -39,6 +39,8 @@ namespace TestGoogleMail
 			AccountMail mail2 = new AccountMail(driverGoogle);
 			mail2.WaitLetterWithTermAndText(termNewLetter, textNewLetter);
 			mail2.OpenFirstLetter();
+			Assert.AreEqual(termNewLetter, termNewLetter, "Wrong email subject");
+			Assert.AreEqual(textNewLetter, textNewLetter, "Wrong text letter");
 			Letter answerLetter = mail2.OpenAnswerLetter();
 			answerLetter.CreateAnswerLetter(textAnswer);
 			mail2.Exit();

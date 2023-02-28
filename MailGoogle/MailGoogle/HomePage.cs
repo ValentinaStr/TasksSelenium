@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
-using static System.Net.WebRequestMethods;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 

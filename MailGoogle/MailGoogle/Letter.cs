@@ -10,11 +10,8 @@ namespace MailGoogle
 		const string SITE_NEW_LETTER_TERM_XPATH = "//input[@name='subjectbox']";
 		const string SITE_NEW_LETTER_TEXT_XPATH = "//div[@class='Am Al editable LW-avf tS-tW']";
 		const string SITE_SEND_NEW_LETTER_XPATH = "//td[@class='gU Up']";
-
 		const string SITE_OPEN_LETTER_TERM_XPATH = "//h2[@class='hP']";
 		const string SITE_OPEN_LETTER_TEXT_XPATH = "//div[@class='a3s aiL ']/div[1]";
-
-		const string SITE_LETTER_ANSWER_XPATH = "//span[@class='ams bkH']";
 		const string SITE_LETTER_ANSWER_TEXT_XPATH = "//div[@class='Am aO9 Al editable LW-avf tS-tW']";
 		const string SITE_LETTER_ANSWER_SEND_XPATH = "//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']";
 		public Letter (IWebDriver driverGoogle) : base(driverGoogle)
