@@ -20,6 +20,7 @@ namespace MailGoogle
 		const string CHECK_TEXT_XPATH = "//div[@class='xT']/span";
 		const string SITE_LETTER_ANSWER_XPATH = "//span[@class='ams bkH']";
 		const string SITE_ACCOUNT_EXIT_XPATH = "//div[@class='SedFmc']";
+		const string SITE_CHECK_SEND_LETTER = "//span[class='aT']";
 
 		public AccountMail(IWebDriver driverGoogle) : base(driverGoogle)
 		{
@@ -80,6 +81,8 @@ namespace MailGoogle
 		
 		public void Exit()
 		{
+
+			_wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(SITE_CHECK_SEND_LETTER)));
 			_driverGoogle.FindElement(By.XPath(SITE_OPEN_ACCOUNT_XPATH)).Click();
 			_driverGoogle.SwitchTo().Frame("account");
 			allFrameAccount = _driverGoogle.FindElements(By.XPath(SITE_ACCOUNT_EXIT_XPATH));

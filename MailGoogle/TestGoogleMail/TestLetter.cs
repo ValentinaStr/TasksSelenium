@@ -15,7 +15,7 @@ namespace TestGoogleMail
 			var password = "_SeLeNiuM_";
 			var seccondMail = "TSelenium102@gmail.com";
 			var termNewLetter = "**summer**";
-			var textNewLetter = "**sun**";
+			var textNewLetter = "*sun*";
 			var textAnswer = "**worm**";
 
 			WebDriver driverGoogle = new ChromeDriver();
@@ -52,7 +52,7 @@ namespace TestGoogleMail
 			mail101.OpenFirstLetter();
 			var chekTextAnswer = answerLetter.GetTextLetter();
 			Assert.AreEqual(chekTextAnswer, textAnswer, "Wrong Text answer.");
-			//mail101.Exit();
+			mail101.Exit();
 			driverGoogle.Close();
 
 		}
