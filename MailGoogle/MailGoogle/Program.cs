@@ -20,11 +20,11 @@ namespace MailGoogle
 
 			WebDriver driverGoogle = new ChromeDriver();
 
-			driverGoogle.Navigate().GoToUrl("https://www.google.com/intl/ru/gmail/about/");
+			HomePage home = new HomePage(driverGoogle);
+			home.GoToUrl();
 
-			HomePage home00 = new HomePage(driverGoogle);
 			//1
-			LoginPage loginPage001 = home00.OpenLoginPage();
+			LoginPage loginPage001 = home.OpenLoginPage();
 			loginPage001.InputEmailInLogin(firstMail);
 			loginPage001.InputPasswordInLogin(password);
 			AccountMail mail001 = new AccountMail(driverGoogle);
@@ -34,7 +34,7 @@ namespace MailGoogle
 
 			//2
 			Thread.Sleep(500);
-			LoginPage loginPage002 = home00.OpenLoginPage();
+			LoginPage loginPage002 = home.OpenLoginPage();
 			loginPage002.InputEmailInLogin(seccondMail);
 			loginPage002.InputPasswordInLogin(password);
 
@@ -46,6 +46,7 @@ namespace MailGoogle
 			mail002.Exit();
 
 			//3
+			Thread.Sleep(500);
 			loginPage001.InputEmailInLogin(firstMail);
 			loginPage001.InputPasswordInLogin(password);
 			mail001.WaitLetterWithTerm(termNewLetter);

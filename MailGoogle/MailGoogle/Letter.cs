@@ -58,23 +58,15 @@ namespace MailGoogle
 
 		public void CreateAnswerLetter(string text)
 		{
-			//OpenAnswerLetter();
 			InputAnswerText(text);
 			SendAnswerLetter();
 		}
-		public Letter OpenAnswerLetter()
-		{
-			FindElementWhithWaiter(SITE_LETTER_ANSWER_XPATH).Click();
-			return new Letter(_driverGoogle);
-		}
 		public void InputAnswerText(string text)
 		{
-			//_wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(SITE_LETTER_ANSWER_TEXT_XPATH)));
 			FindElementWhithWaiter(SITE_LETTER_ANSWER_TEXT_XPATH).SendKeys(text);
 		}
 		public void SendAnswerLetter()
 		{
-			//_wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(SITE_LETTER_ANSWER_SEND_XPATH)));
 			FindElementWhithWaiter(SITE_LETTER_ANSWER_SEND_XPATH).Click();
 		}
 

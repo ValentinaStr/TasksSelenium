@@ -17,6 +17,11 @@ namespace MailGoogle
 		{
 			_wait = new WebDriverWait(driverGoogle, TimeSpan.FromSeconds(50));
 			_driverGoogle = driverGoogle;
+		}
+
+		public void GoToUrl()
+		{
+			_driverGoogle.Url = "https://www.google.com/intl/ru/gmail/about/";
 			_driverGoogle.Manage().Window.Maximize();
 		}
 

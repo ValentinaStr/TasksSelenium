@@ -14,18 +14,17 @@ namespace TestGoogleMail
 			var firstMail = "TSelenium101@gmail.com";
 			var password = "_SeLeNiuM_";
 			var seccondMail = "TSelenium102@gmail.com";
-			var termNewLetter = "**summer*";
-			var textNewLetter = "**sun*";
-			var textAnswer = "**worm*";
+			var termNewLetter = "**summer**";
+			var textNewLetter = "**sun**";
+			var textAnswer = "**worm**";
 
 			WebDriver driverGoogle = new ChromeDriver();
 
-			driverGoogle.Navigate().GoToUrl("https://www.google.com/intl/ru/gmail/about/");
-
-			HomePage home00 = new HomePage(driverGoogle);
+			HomePage home = new HomePage(driverGoogle);
+			home.GoToUrl();
 
 			//1
-			LoginPage loginPage = home00.OpenLoginPage();
+			LoginPage loginPage = home.OpenLoginPage();
 			loginPage.InputEmailInLogin(firstMail);
 			loginPage.InputPasswordInLogin(password);
 			AccountMail mail101 = new AccountMail(driverGoogle);
@@ -34,7 +33,7 @@ namespace TestGoogleMail
 			mail101.Exit();
 
 			//2
-			home00.OpenLoginPage();
+			home.OpenLoginPage();
 			loginPage.InputEmailInLogin(seccondMail);
 			loginPage.InputPasswordInLogin(password);
 			AccountMail mail2 = new AccountMail(driverGoogle);
