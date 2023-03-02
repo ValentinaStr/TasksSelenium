@@ -14,7 +14,7 @@ namespace MailGoogle
 
 		public HomePage(IWebDriver driverGoogle)
 		{
-			_wait = new WebDriverWait(driverGoogle, TimeSpan.FromSeconds(50));
+			_wait = new WebDriverWait(driverGoogle, TimeSpan.FromSeconds(60));
 			_driverGoogle = driverGoogle;
 		}
 

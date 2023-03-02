@@ -14,7 +14,7 @@ namespace MailGoogle
 
 		const string SITE_RELOAD_MAIL_XPATH ="//div[@class='T-I J-J5-Ji nu T-I-ax7 L3']";
 		const string SITE_OPEN_NEW_LETTER_XPATH = "//div[@class='T-I T-I-KE L3']";
-		const string SITE_OPEN_ACCOUNT_XPATH = "//div[@class='gb_Ef gb_4a gb_qg gb_r']";
+		const string SITE_OPEN_ACCOUNT_XPATH = "//a[@class='gb_e gb_0a gb_r']";
 		const string SITE_OPEN_FIRST_LETTER_XPATH = "//tr[@role='row']";
 		const string CHECK_TERM_XPATH = "//span[@class='bog']/span";
 		const string CHECK_TEXT_XPATH = "//div[@class='xT']/span";
