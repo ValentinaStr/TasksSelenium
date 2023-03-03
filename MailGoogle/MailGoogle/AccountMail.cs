@@ -64,13 +64,18 @@ namespace MailGoogle
 
 		public string CHeckTermLetter()
 		{
-			return FindElementWhithWaiter(CHECK_TERM_XPATH).Text;
+			try { return FindElementWhithWaiter(CHECK_TERM_XPATH).Text; }
+			catch { return "no letter"; }
 		}
 
 		public string CheckTextLetter()
 		{
-			var textLetter = _driverGoogle.FindElement(By.XPath(CHECK_TEXT_XPATH)).Text;
-			return textLetter.Substring(5);
+			try
+			{
+				var textLetter = _driverGoogle.FindElement(By.XPath(CHECK_TEXT_XPATH)).Text;
+				return textLetter.Substring(5);
+			}
+			catch { return "no letter"; }
 		}
 
 		public Letter OpenAnswerLetter()
