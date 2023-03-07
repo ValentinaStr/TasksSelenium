@@ -1,10 +1,10 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using System.Runtime.Intrinsics.X86;
 
 namespace MailGoogle
 {
-	public class Letter : AccountMail
+	public class Letter :BasePage
 	{		
 		const string SITE_NEW_LETTER_ADDRESS_XPATH = "//input[@peoplekit-id='BbVjBd']";
 		const string SITE_NEW_LETTER_TERM_XPATH = "//input[@name='subjectbox']";
@@ -14,7 +14,9 @@ namespace MailGoogle
 		const string SITE_OPEN_LETTER_TEXT_XPATH = "//div[@class='a3s aiL ']/div[1]";
 		const string SITE_LETTER_ANSWER_TEXT_XPATH = "//div[@class='Am aO9 Al editable LW-avf tS-tW']";
 		const string SITE_LETTER_ANSWER_SEND_XPATH = "//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']";
-		public Letter (IWebDriver driverGoogle) : base(driverGoogle)
+		const string SITE_LETTER_CLOSED_ALERT = "//div[@class='bBe']";
+		const string SITE_CHECK_SEND_LETTER = "//span[class='aT']";
+		public Letter (IWebDriver _driverGoogle) : base(_driverGoogle)
 		{
 		}
 		public void CreateNewLetter(string adress, string term, string text)
@@ -44,13 +46,12 @@ namespace MailGoogle
 
 		public string GetTermLetter()
 		{
-			_wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(SITE_OPEN_LETTER_TERM_XPATH)));
-			return _driverGoogle.FindElement(By.XPath(SITE_OPEN_LETTER_TERM_XPATH)).Text;
+			
+			return FindElementWhithWaiter(SITE_OPEN_LETTER_TERM_XPATH).Text;
 		}
 		public string GetTextLetter()
-		{
-			_wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(SITE_OPEN_LETTER_TEXT_XPATH)));
-			return _driverGoogle.FindElement(By.XPath(SITE_OPEN_LETTER_TEXT_XPATH)).Text;
+		{			
+			return FindElementWhithWaiter(SITE_OPEN_LETTER_TEXT_XPATH).Text;
 		}
 
 		public void CreateAnswerLetter(string text)
@@ -67,5 +68,11 @@ namespace MailGoogle
 			FindElementWhithWaiter(SITE_LETTER_ANSWER_SEND_XPATH).Click();
 		}
 
+		/*public void CloseAlert()
+		{
+			_wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(SITE_CHECK_SEND_LETTER)));
+			FindElementWhithWaiter(SITE_LETTER_CLOSED_ALERT).Click();
+			
+		}*/
 	}
 }

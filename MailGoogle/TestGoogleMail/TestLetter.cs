@@ -1,7 +1,6 @@
 using MailGoogle;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
-using System.Diagnostics;
 
 namespace TestGoogleMail
 {
@@ -9,14 +8,14 @@ namespace TestGoogleMail
 	public class TestLetter
 	{
 		[TestMethod]
-		public void TestMail()
+		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_")]
+		public void TestMail(string firstMail, string password)
 		{
-			var firstMail = "TSelenium101@gmail.com";
-			var password = "_SeLeNiuM_";
 			var seccondMail = "TSelenium102@gmail.com";
-			var termNewLetter = "*)summer(*";
+			var termNewLetter = "*)**summer**(*";
 			var textNewLetter = "*sun*";
 			var textAnswer = "*worm*";
+			var nameCookies = "ACCOUNT_CHOOSER";
 
 			WebDriver driverGoogle = new ChromeDriver();
 
@@ -24,7 +23,9 @@ namespace TestGoogleMail
 			home.GoToUrl();
 
 			//1
+			
 			LoginPage loginPage = home.OpenLoginPage();
+			loginPage.RefreshCookies(nameCookies);
 			loginPage.InputEmailInLogin(firstMail);
 			loginPage.InputPasswordInLogin(password);
 			AccountMail mail101 = new AccountMail(driverGoogle);
@@ -34,6 +35,7 @@ namespace TestGoogleMail
 
 			//2
 			home.OpenLoginPage();
+			loginPage.RefreshCookies(nameCookies);
 			loginPage.InputEmailInLogin(seccondMail);
 			loginPage.InputPasswordInLogin(password);
 			AccountMail mail2 = new AccountMail(driverGoogle);
@@ -47,6 +49,7 @@ namespace TestGoogleMail
 			mail2.Exit();
 
 			//3
+			loginPage.RefreshCookies(nameCookies);
 			loginPage.InputEmailInLogin(firstMail);
 			loginPage.InputPasswordInLogin(password);
 			mail101.WaitLetterWithTerm(termNewLetter);

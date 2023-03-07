@@ -1,13 +1,12 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.DevTools.V108.DOM;
+using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using System.Collections.Generic;
 using System.Diagnostics;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace MailGoogle
 {
-	public class AccountMail:HomePage
+	public class AccountMail:BasePage
 	{
 		IList<IWebElement> allFrameAccount;
 		IList<IWebElement> listLetters;
@@ -22,7 +21,7 @@ namespace MailGoogle
 		const string SITE_ACCOUNT_EXIT_XPATH = "//div[@class='SedFmc']";
 		const string SITE_CHECK_SEND_LETTER = "//span[class='aT']";
 
-		public AccountMail(IWebDriver driverGoogle) : base(driverGoogle)
+		public AccountMail(IWebDriver _driverGoogle) : base(_driverGoogle)
 		{
 
 		}
@@ -36,7 +35,7 @@ namespace MailGoogle
 		{
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
-			while ((CHeckTermLetter() != termLetter & CheckTextLetter() != textLetter) | stopwatch.ElapsedMilliseconds > 600000)
+			while ((CHeckTermLetter() != termLetter && CheckTextLetter() != textLetter) | stopwatch.ElapsedMilliseconds > 600000)
 			{
 				FindElementWhithWaiter(SITE_RELOAD_MAIL_XPATH).Click();
 			}
@@ -47,16 +46,26 @@ namespace MailGoogle
 		{
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
-			while (CHeckTermLetter() != termLetter | stopwatch.ElapsedMilliseconds > 600000)
+			while ( stopwatch.ElapsedMilliseconds > 600000)
 			{
-				FindElementWhithWaiter(SITE_RELOAD_MAIL_XPATH).Click();
+				try
+				{
+					var term = _driverGoogle.FindElement(By.XPath(CHECK_TERM_XPATH)).Text;
+					FindElementWhithWaiter(SITE_RELOAD_MAIL_XPATH).Click();
+					if (term == termLetter)
+					break;
+				}
+				catch 
+				{ 
+
+				}
+				
 			}
 			stopwatch.Stop();
 		}
 
 		public void OpenFirstLetter()
 		{
-			Thread.Sleep(500);
 			_wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(SITE_OPEN_FIRST_LETTER_XPATH)));
 			listLetters = _driverGoogle.FindElements(By.XPath(SITE_OPEN_FIRST_LETTER_XPATH));
 			listLetters[0].Click();
@@ -64,7 +73,7 @@ namespace MailGoogle
 
 		public string CHeckTermLetter()
 		{
-			try { return FindElementWhithWaiter(CHECK_TERM_XPATH).Text; }
+			try { return _driverGoogle.FindElement(By.XPath(CHECK_TERM_XPATH)).Text; }
 			catch { return "no letter"; }
 		}
 
@@ -86,10 +95,11 @@ namespace MailGoogle
 		
 		public void Exit()
 		{
-
 			_wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(SITE_CHECK_SEND_LETTER)));
 			_driverGoogle.FindElement(By.XPath(SITE_OPEN_ACCOUNT_XPATH)).Click();
+			Thread.Sleep(100);
 			_driverGoogle.SwitchTo().Frame("account");
+
 			allFrameAccount = _driverGoogle.FindElements(By.XPath(SITE_ACCOUNT_EXIT_XPATH));
 			allFrameAccount[1].Click();
 		}
