@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System.Diagnostics;
+using System.Threading;
 
 
 namespace MailGoogle
@@ -66,7 +67,7 @@ namespace MailGoogle
 
 		public void OpenFirstLetter()
 		{
-			_wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(SITE_OPEN_FIRST_LETTER_XPATH)));
+			FindElementWhithWaiter(SITE_OPEN_FIRST_LETTER_XPATH);
 			listLetters = _driverGoogle.FindElements(By.XPath(SITE_OPEN_FIRST_LETTER_XPATH));
 			listLetters[0].Click();
 		}
@@ -96,10 +97,10 @@ namespace MailGoogle
 		public void Exit()
 		{
 			_wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(SITE_CHECK_SEND_LETTER)));
-			_driverGoogle.FindElement(By.XPath(SITE_OPEN_ACCOUNT_XPATH)).Click();
+			FindElementWhithWaiter(SITE_OPEN_ACCOUNT_XPATH).Click();
 			Thread.Sleep(100);
 			_driverGoogle.SwitchTo().Frame("account");
-
+			Thread.Sleep(100);
 			allFrameAccount = _driverGoogle.FindElements(By.XPath(SITE_ACCOUNT_EXIT_XPATH));
 			allFrameAccount[1].Click();
 		}

@@ -7,7 +7,7 @@ namespace MailGoogle
 {
 	public abstract class BasePage
 	{
-		public IWebDriver _driverGoogle;
+		protected IWebDriver _driverGoogle;
 		protected WebDriverWait _wait;
 		const int WaitTime = 30;
 
@@ -22,7 +22,8 @@ namespace MailGoogle
 		}	
 
 		public IWebElement FindElementWhithWaiter(string xpath)
-		{		
+		{
+		
 			_wait = new WebDriverWait(_driverGoogle, TimeSpan.FromSeconds(WaitTime));			
 			_wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
 			return _driverGoogle.FindElement(By.XPath(xpath));

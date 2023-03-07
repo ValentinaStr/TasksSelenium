@@ -1,7 +1,4 @@
-﻿using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
+﻿using OpenQA.Selenium;
 
 namespace MailGoogle
 {
