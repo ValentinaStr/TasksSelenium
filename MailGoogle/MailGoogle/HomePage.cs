@@ -2,19 +2,24 @@
 
 namespace MailGoogle
 {
-	public class HomePage : BasePage
+	public class HomePage: BasePage
 	{
-		const string SITE_EMAIL_XPATH = "//a[@data-action='sign in']";
-
 		public HomePage(IWebDriver _driverGoogle) : base(_driverGoogle)
 		{
 			
-		}		
+		}
 
 		public LoginPage OpenLoginPage()
 		{
-			FindElementWhithWaiter(SITE_EMAIL_XPATH).Click();
+			FindElementWhithWaiter(XPathGoogle.SITE_EMAIL_XPATH).Click();
 			return new LoginPage(_driverGoogle);
-		}		
+		}	
+		
+		public string GetUrl()
+		{
+			return FindElementWhithWaiter(XPathGoogle.SITE_NAME_POST_XPATH).Text;
+		}
+
+		
 	}
 }

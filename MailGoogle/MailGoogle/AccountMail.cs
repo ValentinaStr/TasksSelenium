@@ -1,44 +1,39 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System.Diagnostics;
-using System.Threading;
-
 
 namespace MailGoogle
 {
-	public class AccountMail:BasePage
+	public class AccountMail : BasePage
 	{
 		IList<IWebElement> allFrameAccount;
 		IList<IWebElement> listLetters;
-
-		const string SITE_RELOAD_MAIL_XPATH ="//div[@class='T-I J-J5-Ji nu T-I-ax7 L3']";
-		const string SITE_OPEN_NEW_LETTER_XPATH = "//div[@class='T-I T-I-KE L3']";
-		const string SITE_OPEN_ACCOUNT_XPATH = "//a[@class='gb_e gb_0a gb_r']";
-		const string SITE_OPEN_FIRST_LETTER_XPATH = "//tr[@role='row']";
-		const string CHECK_TERM_XPATH = "//span[@class='bog']/span";
-		const string CHECK_TEXT_XPATH = "//div[@class='xT']/span";
-		const string SITE_LETTER_ANSWER_XPATH = "//span[@class='ams bkH']";
-		const string SITE_ACCOUNT_EXIT_XPATH = "//div[@class='SedFmc']";
-		const string SITE_CHECK_SEND_LETTER = "//span[class='aT']";
+		const int STOPWATCH = 60000;
 
 		public AccountMail(IWebDriver _driverGoogle) : base(_driverGoogle)
 		{
 
 		}
+		public string GetUserName()
+		{
+			var str = FindElementWhithWaiter(XPathGoogle.SITE_USER_NAME_XPATH).Text;
+			Console.WriteLine(str);
+			Console.WriteLine("________");
+			return str;
+		}
 		public Letter OpenNewLetter()
 		{
-			FindElementWhithWaiter(SITE_OPEN_NEW_LETTER_XPATH).Click();
+			FindElementWhithWaiter(XPathGoogle.SITE_OPEN_NEW_LETTER_XPATH).Click();
 			return new Letter(_driverGoogle);
 		}
-		
-		public void WaitLetterWithTermAndText(string termLetter,string textLetter )
+
+		public void WaitLetterWithTermAndText(string termLetter, string textLetter)
 		{
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
-			while ((CHeckTermLetter() != termLetter && CheckTextLetter() != textLetter) | stopwatch.ElapsedMilliseconds > 600000)
+			while ((CHeckTermLetter() != termLetter && CheckTextLetter() != textLetter) | stopwatch.ElapsedMilliseconds > STOPWATCH)
 			{
-				FindElementWhithWaiter(SITE_RELOAD_MAIL_XPATH).Click();
+				FindElementWhithWaiter(XPathGoogle.SITE_RELOAD_MAIL_XPATH).Click();
 			}
 			stopwatch.Stop();
 		}
@@ -47,34 +42,34 @@ namespace MailGoogle
 		{
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
-			while ( stopwatch.ElapsedMilliseconds > 600000)
+			while (stopwatch.ElapsedMilliseconds > STOPWATCH)
 			{
 				try
 				{
-					var term = _driverGoogle.FindElement(By.XPath(CHECK_TERM_XPATH)).Text;
-					FindElementWhithWaiter(SITE_RELOAD_MAIL_XPATH).Click();
+					var term = _driverGoogle.FindElement(By.XPath(XPathGoogle.CHECK_TERM_XPATH)).Text;
+					FindElementWhithWaiter(XPathGoogle.SITE_RELOAD_MAIL_XPATH).Click();
 					if (term == termLetter)
-					break;
+						break;
 				}
-				catch 
-				{ 
+				catch
+				{
 
 				}
-				
+
 			}
 			stopwatch.Stop();
 		}
 
 		public void OpenFirstLetter()
 		{
-			FindElementWhithWaiter(SITE_OPEN_FIRST_LETTER_XPATH);
-			listLetters = _driverGoogle.FindElements(By.XPath(SITE_OPEN_FIRST_LETTER_XPATH));
+			FindElementWhithWaiter(XPathGoogle.SITE_OPEN_FIRST_LETTER_XPATH);
+			listLetters = _driverGoogle.FindElements(By.XPath(XPathGoogle.SITE_OPEN_FIRST_LETTER_XPATH));
 			listLetters[0].Click();
 		}
 
 		public string CHeckTermLetter()
 		{
-			try { return _driverGoogle.FindElement(By.XPath(CHECK_TERM_XPATH)).Text; }
+			try { return _driverGoogle.FindElement(By.XPath(XPathGoogle.CHECK_TERM_XPATH)).Text; }
 			catch { return "no letter"; }
 		}
 
@@ -82,7 +77,7 @@ namespace MailGoogle
 		{
 			try
 			{
-				var textLetter = _driverGoogle.FindElement(By.XPath(CHECK_TEXT_XPATH)).Text;
+				var textLetter = _driverGoogle.FindElement(By.XPath(XPathGoogle.CHECK_TEXT_XPATH)).Text;
 				return textLetter.Substring(5);
 			}
 			catch { return "no letter"; }
@@ -90,18 +85,24 @@ namespace MailGoogle
 
 		public Letter OpenAnswerLetter()
 		{
-			FindElementWhithWaiter(SITE_LETTER_ANSWER_XPATH).Click();
+			FindElementWhithWaiter(XPathGoogle.SITE_LETTER_ANSWER_XPATH).Click();
 			return new Letter(_driverGoogle);
 		}
-		
+
+		public void SwithToFrame()
+		{
+			FindElementWhithWaiter(XPathGoogle.SITE_OPEN_ACCOUNT_XPATH).Click();
+			Thread.Sleep(100);
+			_driverGoogle.SwitchTo().Frame("account");
+	}
 		public void Exit()
 		{
-			_wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(SITE_CHECK_SEND_LETTER)));
-			FindElementWhithWaiter(SITE_OPEN_ACCOUNT_XPATH).Click();
+			_wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPathGoogle.SITE_CHECK_SEND_LETTER)));
+			FindElementWhithWaiter(XPathGoogle.SITE_OPEN_ACCOUNT_XPATH).Click();
 			Thread.Sleep(100);
 			_driverGoogle.SwitchTo().Frame("account");
 			Thread.Sleep(100);
-			allFrameAccount = _driverGoogle.FindElements(By.XPath(SITE_ACCOUNT_EXIT_XPATH));
+			allFrameAccount = _driverGoogle.FindElements(By.XPath(XPathGoogle.SITE_ACCOUNT_EXIT_XPATH));
 			allFrameAccount[1].Click();
 		}
 	}

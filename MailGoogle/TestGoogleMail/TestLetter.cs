@@ -1,20 +1,22 @@
 using MailGoogle;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
+using static System.Net.WebRequestMethods;
 
 namespace TestGoogleMail
 {
 	[TestClass]
 	public class TestLetter
 	{
-		[TestMethod]
-		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_")]
-		public void TestMail(string firstMail, string password)
+		/*[TestMethod]
+		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "TSelenium102@gmail.com", "*)**summer**(*", "*sun*", "*worm*")]
+		public void TestMail(string firstMail,
+							string password,
+							string seccondMail,
+							string termNewLetter,
+							string textNewLetter,
+							string textAnswer)
 		{
-			var seccondMail = "TSelenium102@gmail.com";
-			var termNewLetter = "*)**summer**(*";
-			var textNewLetter = "*sun*";
-			var textAnswer = "*worm*";
 			var nameCookies = "ACCOUNT_CHOOSER";
 
 			WebDriver driverGoogle = new ChromeDriver();
@@ -23,7 +25,7 @@ namespace TestGoogleMail
 			home.GoToUrl();
 
 			//1
-			
+
 			LoginPage loginPage = home.OpenLoginPage();
 			loginPage.RefreshCookies(nameCookies);
 			loginPage.InputEmailInLogin(firstMail);
@@ -59,6 +61,37 @@ namespace TestGoogleMail
 			mail101.Exit();
 			driverGoogle.Close();
 
+		}*/
+
+		[TestMethod]
+		public void CheckNamePostPositive()
+		{
+			WebDriver driverGoogle = new ChromeDriver();
+			HomePage home = new HomePage(driverGoogle);
+			home.GoToUrl();
+			var namePostExpected = "Gmail";
+			var namePostActual = home.GetUrl();
+			Assert.AreEqual(namePostExpected, namePostActual);
+			driverGoogle.Quit();
 		}
+
+		[TestMethod]
+		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_")]
+		public void CheckUserName(string firstMail, string password)
+		{
+			WebDriver driverGoogle = new ChromeDriver();
+			HomePage home = new HomePage(driverGoogle);
+			home.GoToUrl();
+			LoginPage loginPage = home.OpenLoginPage();
+			loginPage.InputEmailInLogin(firstMail);
+			loginPage.InputPasswordInLogin(password);
+			AccountMail mail101 = new AccountMail(driverGoogle);
+			mail101.SwithToFrame();
+			var nameUserExpected = "Sele nium";	
+			var nameUserActual = mail101.GetUserName;
+			Assert.AreEqual(nameUserExpected, nameUserActual);
+			driverGoogle.Quit();
+		}
+
 	}
 }

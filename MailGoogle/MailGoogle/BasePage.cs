@@ -9,12 +9,13 @@ namespace MailGoogle
 	{
 		protected IWebDriver _driverGoogle;
 		protected WebDriverWait _wait;
-		const int WaitTime = 30;
+		const int WaitTime = 30;		
 
-		public  BasePage(IWebDriver driverGoogle)
+		public BasePage(IWebDriver driverGoogle)
 		{
 			_driverGoogle = driverGoogle;
 		}
+		
 		public void GoToUrl()
 		{
 			_driverGoogle.Url = "https://www.google.com/intl/ru/gmail/about/";
