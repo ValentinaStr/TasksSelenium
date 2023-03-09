@@ -55,5 +55,9 @@ namespace MailGoogle
 		{
 			FindElementWhithWaiter(XPathGoogle.SITE_LETTER_ANSWER_SEND_XPATH).Click();
 		}
+		public void ClosedNewLetter()
+		{
+			FindElementWhithWaiter(XPathGoogle.SITE_CLOSED_NEW_LETTER_XPATH).Click();
+		}
 	}
 }

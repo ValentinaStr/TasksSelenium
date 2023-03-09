@@ -1,27 +1,25 @@
 using MailGoogle;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 
 namespace TestGoogleMail
 {
 	[TestClass]
 	public class TestLetter
 	{
-		public static WebDriver driverGoogle;
-		/*
+		private IWebDriver _driverGoogle;
+
 		[TestInitialize]
-		public static void CreateDriver()
+		public void BeforeTest()
 		{
-			driverGoogle = new ChromeDriver();
+			_driverGoogle = new ChromeDriver();
 		}
 
 		[TestCleanup]
-		public static void ClassCleanup()
+		public void ClassCleanup()
 		{
-			driverGoogle.Quit();
-			//GoToUrl();
-			//driverGoogle.Close();
-		}*/
+			_driverGoogle.Close();
+		}
 
 		[TestMethod]
 		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "TSelenium102@gmail.com", "*)**summer**(*", "*sun*", "*worm*")]
@@ -36,76 +34,66 @@ namespace TestGoogleMail
 
 
 			//1
-			WebDriver driverGoogle = new ChromeDriver();
-
-			HomePage home = new HomePage(driverGoogle);
-			home.GoToUrl();
+			HomePage home = new HomePage(_driverGoogle);
 			LoginPage loginPage = home.OpenLoginPage();
 			loginPage.RefreshCookies(nameCookies);
 			loginPage.Login(firstMail, password);
-			AccountMail mail101 = new AccountMail(driverGoogle);
-			Letter newLetter = mail101.OpenNewLetter();
+			AccountMail mail = home.OpenAccountMailPage();
+			Letter newLetter = mail.OpenNewLetter();
 			newLetter.CreateNewLetter(secondMail, termNewLetter, textNewLetter);
-			mail101.Exit();
+			Thread.Sleep(600);
+			mail.Exit();
 
 			//2
 			home.OpenLoginPage();
 			loginPage.RefreshCookies(nameCookies);
-			loginPage.Login(secondMail, password);			
-			AccountMail mail2 = new AccountMail(driverGoogle);
-			mail2.WaitLetterWithTermAndText(termNewLetter, textNewLetter);
-			mail2.OpenFirstLetter();
+			loginPage.Login(secondMail, password);
+			//AccountMail mail = home.OpenAccountMailPage();
+			mail.WaitLetterWithTermAndText(termNewLetter, textNewLetter);
+			mail.OpenFirstLetter();
 			Assert.AreEqual(termNewLetter, termNewLetter, "Wrong email subject");
 			Assert.AreEqual(textNewLetter, textNewLetter, "Wrong text letter");
-			Letter answerLetter = mail2.OpenAnswerLetter();
+			Letter answerLetter = mail.OpenAnswerLetter();
 			answerLetter.CreateAnswerLetter(textAnswer);
-			Thread.Sleep(500);
-			mail2.Exit();
+			Thread.Sleep(600);
+			mail.Exit();
 
 			//3
 			loginPage.RefreshCookies(nameCookies);
-			loginPage.Login(firstMail, password);		
-			mail101.WaitLetterWithTerm(termNewLetter);
-			mail101.OpenFirstLetter();
+			loginPage.Login(firstMail, password);
+			mail.WaitLetterWithTerm(termNewLetter);
+			mail.OpenFirstLetter();
 			var chekTextAnswer = answerLetter.GetTextLetter();
 			Assert.AreEqual(chekTextAnswer, textAnswer, "Wrong Text answer.");
-			mail101.Exit();
-			driverGoogle.Quit();
-			//driverGoogle.Close();
-
+			Thread.Sleep(600);
+			mail.Exit();
 		}
 
 		[TestMethod]
 		[DataRow("Gmail")]
 		public void CheckNamePostPositive(string namePostExpected)
 		{
-			WebDriver driverGoogle = new ChromeDriver();
-			HomePage home = new HomePage(driverGoogle);
-			home.GoToUrl();
+			HomePage home = new HomePage(_driverGoogle);
+
 			var namePostActual = home.GetUrl();
 			Assert.AreEqual(namePostExpected, namePostActual);
-			driverGoogle.Quit();
 		}
 
 		[TestMethod]
 		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "Sele nium")]
 		public void CheckUserName(string firstMail, string password, string nameUserExpected)
 		{
-			WebDriver driverGoogle = new ChromeDriver();
-			HomePage home = new HomePage(driverGoogle);
-			home.GoToUrl();
+			HomePage home = new HomePage(_driverGoogle);
 			LoginPage loginPage = home.OpenLoginPage();
-			loginPage.Login(firstMail, password);			
-			AccountMail mail101 = new AccountMail(driverGoogle);			
-			mail101.SwithFrame();
+			loginPage.Login(firstMail, password);
+			AccountMail mail101 = home.OpenAccountMailPage();
 			Thread.Sleep(100);
 			var nameUserActual = mail101.GetUserName();
 			Assert.AreEqual(nameUserExpected, nameUserActual);
-			driverGoogle.Quit();
 		}
 
 		[TestMethod]
-		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_")]
+		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "TSelenium102@gmail.com", "abc", "defj")]
 		public void ChekVisibleNewLetter(string firstMail,
 							string password,
 							string secondMail,
@@ -113,25 +101,69 @@ namespace TestGoogleMail
 							string textNewLetter)
 		{
 			var nameCookies = "ACCOUNT_CHOOSER";
-			WebDriver driverGoogle = new ChromeDriver();
-			HomePage home = new HomePage(driverGoogle);
-			home.GoToUrl();
+			HomePage home = new HomePage(_driverGoogle);
 			LoginPage loginPage = home.OpenLoginPage();
 			loginPage.Login(firstMail, password);
-			AccountMail mail101 = new AccountMail(driverGoogle);
+			AccountMail mail101 = home.OpenAccountMailPage();
 			Letter newLetter = mail101.OpenNewLetter();
 			newLetter.CreateNewLetter(secondMail, termNewLetter, textNewLetter);
 			mail101.Exit();
-			
+
 			home.OpenLoginPage();
 			loginPage.RefreshCookies(nameCookies);
 			loginPage.Login(secondMail, password);
-			AccountMail mail2 = new AccountMail(driverGoogle);
+			AccountMail mail2 = home.OpenAccountMailPage();
 			mail2.WaitLetterWithTermAndText(termNewLetter, textNewLetter);
 			Assert.AreEqual(termNewLetter, termNewLetter, "Wrong email subject");
 			Assert.AreEqual(textNewLetter, textNewLetter, "Wrong text letter");
 		}
 
+		[TestMethod]
+		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "TSelenium101@gmail.com", "Hi", "How are you?")]
+		public void CheckCounterNewLetterPositive(string firstMail, string password, string secondMail, string termNewLetter, string textNewLetter)
+		{
+			HomePage home = new HomePage(_driverGoogle);
+			LoginPage loginPage = home.OpenLoginPage();
+			loginPage.Login(firstMail, password);
 
+			AccountMail mail = home.OpenAccountMailPage();
+			Letter newLetter = mail.OpenNewLetter();
+			newLetter.CreateNewLetter(secondMail, termNewLetter, textNewLetter);
+			mail.WaitLetterWithTerm(termNewLetter);
+			var counterNewLetter = mail.GetCounterNewLetter();
+			Assert.IsNotNull(counterNewLetter);
+		}
+
+		[TestMethod]
+		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "TSelenium101@gmail.com", "Hi", "How are you?")]
+		public void CheckCounterPlusNewLetterPositive(string firstMail, string password, string secondMail, string termNewLetter, string textNewLetter)
+		{
+			HomePage home = new HomePage(_driverGoogle);
+			LoginPage loginPage = home.OpenLoginPage();
+			loginPage.Login(firstMail, password);
+			AccountMail mail = home.OpenAccountMailPage();
+			var counterNewLetter1 = mail.GetCounterNewLetter();
+			Letter newLetter = mail.OpenNewLetter();
+			newLetter.CreateNewLetter(secondMail, termNewLetter, textNewLetter);
+			mail.WaitLetterWithTerm(termNewLetter);
+			var counterNewLetter2 = mail.GetCounterNewLetter();
+			Assert.IsFalse(counterNewLetter2 == counterNewLetter1);
+		}
+
+		[TestMethod]
+		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "TSelenium101@gmail.com", "Hi", "How are you?")]
+		public void CheckDraftSavePositive(string firstMail, string password, string termNewLetter, string textNewLetter)
+		{
+			HomePage home = new HomePage(_driverGoogle);
+			LoginPage loginPage = home.OpenLoginPage();
+			loginPage.Login(firstMail, password);
+			AccountMail mail = home.OpenAccountMailPage();
+			Letter newLetter = mail.OpenNewLetter();
+			newLetter.CreateNewLetter(firstMail, termNewLetter, textNewLetter);
+			newLetter.ClosedNewLetter();
+			newLetter.ClosedNewLetter();
+
+
+		}
 	}
 }

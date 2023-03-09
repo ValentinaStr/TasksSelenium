@@ -13,11 +13,14 @@ namespace MailGoogle
 		internal const string SITE_LOGIN_PASSWORD_XPATH = "//input[@type='password']";
 		internal const string SITE_LOGIN_PASSWORD_NEXT_BUTTON = "//div[@id='passwordNext']";
 
+
 		internal const string SITE_RELOAD_MAIL_XPATH = "//div[@class='T-I J-J5-Ji nu T-I-ax7 L3']";
 		internal const string SITE_OPEN_NEW_LETTER_XPATH = "//div[@class='T-I T-I-KE L3']";
 		internal const string SITE_OPEN_FIRST_LETTER_XPATH = "//tr[@role='row']";
 		internal const string CHECK_TERM_XPATH = "//span[@class='bog']/span";
 		internal const string CHECK_TEXT_XPATH = "//div[@class='xT']/span";
+		internal const string SITE_EMAIL_COUNTER_NEW_LETTER = "//div[@class='bsU']";
+		internal const string SITE_EMAIL_LIST_NEW_LETTER = "//tr[@class='zA zE']";
 
 		internal const string SITE_LETTER_ANSWER_XPATH = "//span[@class='ams bkH']";
 		internal const string SITE_ACCOUNT_EXIT_XPATH = "//div[@class='SedFmc']";
@@ -30,6 +33,7 @@ namespace MailGoogle
 		internal const string SITE_OPEN_LETTER_TEXT_XPATH = "//div[@class='a3s aiL ']/div[1]";
 		internal const string SITE_LETTER_ANSWER_TEXT_XPATH = "//div[@class='Am aO9 Al editable LW-avf tS-tW']";
 		internal const string SITE_LETTER_ANSWER_SEND_XPATH = "//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']";
+		internal const string SITE_CLOSED_NEW_LETTER_XPATH = "//img[@class='Ha']";
 
 
 	}

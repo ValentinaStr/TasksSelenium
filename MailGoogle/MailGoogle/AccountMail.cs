@@ -6,7 +6,6 @@ namespace MailGoogle
 {
 	public class AccountMail : BasePage
 	{
-		IList<IWebElement> allFrameAccount;
 		IList<IWebElement> listLetters;
 		const int STOPWATCH = 60000;
 
@@ -16,10 +15,8 @@ namespace MailGoogle
 		}
 		public string GetUserName()
 		{
-			var str = FindElementWhithWaiter(XPathGoogle.SITE_USER_NAME_XPATH).Text;
-			Console.WriteLine(str);
-			Console.WriteLine("________");
-			return str;
+			SwithToFrame();
+			return FindElementWhithWaiter(XPathGoogle.SITE_USER_NAME_XPATH).Text;
 		}
 		public void WaitLetterWithTermAndText(string termLetter, string textLetter)
 		{
@@ -79,12 +76,15 @@ namespace MailGoogle
 		public void Exit()
 		{
 			_wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPathGoogle.SITE_CHECK_SEND_LETTER)));
-			FindElementWhithWaiter(XPathGoogle.SITE_OPEN_ACCOUNT_XPATH).Click();
-			Thread.Sleep(100);
-			SwithFrame();
-			Thread.Sleep(100);
-			allFrameAccount = FindElementsWhithWaiter(XPathGoogle.SITE_ACCOUNT_EXIT_XPATH);
-			allFrameAccount[1].Click();
+			SwithToFrame();
+			FindElementsWhithWaiter(XPathGoogle.SITE_ACCOUNT_EXIT_XPATH)[1].Click();
 		}
+
+		public string GetCounterNewLetter()
+		{
+			return FindElementWhithWaiter(XPathGoogle.SITE_EMAIL_COUNTER_NEW_LETTER).Text;
+		}
+
+		//public ReadOnlyCollection<IWebElement> 
 	}
 }

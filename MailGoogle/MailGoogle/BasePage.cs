@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
 using SeleniumExtras.WaitHelpers;
+using System.Collections.ObjectModel;
 
 namespace MailGoogle
 {
@@ -15,31 +16,26 @@ namespace MailGoogle
 		public BasePage(IWebDriver driverGoogle)
 		{
 			_driverGoogle = driverGoogle;
+			_wait = new WebDriverWait(_driverGoogle, TimeSpan.FromSeconds(WaitTime));
 		}
 		
-		public void GoToUrl()
+		public void GoToUrl(string url)
 		{
-			_driverGoogle.Url = "https://www.google.com/intl/ru/gmail/about/";
+			_driverGoogle.Url = url;
 			_driverGoogle.Manage().Window.Maximize();
 		}	
 
 		public IWebElement FindElementWhithWaiter(string xpath)
 		{
-		
-			_wait = new WebDriverWait(_driverGoogle, TimeSpan.FromSeconds(WaitTime));			
-			_wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
-			return _driverGoogle.FindElement(By.XPath(xpath));
+			return _wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
 		}
 
-		public List<IWebElement> FindElementsWhithWaiter(string xpath)
+		public ReadOnlyCollection<IWebElement> FindElementsWhithWaiter(string xpath)
 		{
-
-			_wait = new WebDriverWait(_driverGoogle, TimeSpan.FromSeconds(WaitTime));
-			_wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
-			return _driverGoogle.FindElements(By.XPath(xpath)).ToList();
+			return _wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(By.XPath(xpath)));
 		}
 
-		public void SwithFrame()
+		public void SwithToFrame()
 		{
 			FindElementWhithWaiter(XPathGoogle.SITE_OPEN_ACCOUNT_XPATH).Click();
 			Thread.Sleep(100);
@@ -51,6 +47,7 @@ namespace MailGoogle
 		{
 			_driverGoogle.Manage().Cookies.DeleteCookieNamed(nameCookies);
 			_driverGoogle.Navigate().Refresh();
+			Thread.Sleep(100);
 		}
 				
 		public LoginPage OpenLoginPage()
@@ -68,5 +65,10 @@ namespace MailGoogle
 			FindElementWhithWaiter(XPathGoogle.SITE_LETTER_ANSWER_XPATH).Click();
 			return new Letter(_driverGoogle);
 		}
+		public AccountMail OpenAccountMailPage()
+		{
+			return new AccountMail(_driverGoogle);
+		}
+		
 	}
 }

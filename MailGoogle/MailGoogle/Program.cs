@@ -17,14 +17,13 @@ namespace MailGoogle
 			WebDriver driverGoogle = new ChromeDriver();
 
 			HomePage home = new HomePage(driverGoogle);
-			home.GoToUrl();
 
 			//1
 			LoginPage loginPage001 = home.OpenLoginPage();
 			loginPage001.InputEmailInLogin(firstMail);
 			loginPage001.InputPasswordInLogin(password);
 			AccountMail mail001 = new AccountMail(driverGoogle);
-			mail001.SwithFrame();
+			mail001.SwithToFrame();
 			var r = mail001.GetUserName();
 			Letter newLetter = mail001.OpenNewLetter();
 			newLetter.CreateNewLetter(seccondMail, termNewLetter, textNewLetter);
