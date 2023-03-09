@@ -5,6 +5,7 @@ namespace MailGoogle
 	{
 		internal const string SITE_EMAIL_XPATH = "//a[@data-action='sign in']";
 		internal const string SITE_NAME_POST_XPATH = "//a[@href='/intl/ru/gmail/about/']";
+		internal const string SITE_OPEN_ACCOUNT_XPATH = "//a[@class='gb_e gb_1a gb_s']";
 		internal const string SITE_USER_NAME_XPATH = "//div[@class='znj3je NB6Lnc']";
 
 		internal const string SITE_LOGIN_EMAIL_XPATH = "//input[@id='identifierId']";
@@ -14,7 +15,6 @@ namespace MailGoogle
 
 		internal const string SITE_RELOAD_MAIL_XPATH = "//div[@class='T-I J-J5-Ji nu T-I-ax7 L3']";
 		internal const string SITE_OPEN_NEW_LETTER_XPATH = "//div[@class='T-I T-I-KE L3']";
-		internal const string SITE_OPEN_ACCOUNT_XPATH = "//a[@class='gb_e gb_0a gb_r']";
 		internal const string SITE_OPEN_FIRST_LETTER_XPATH = "//tr[@role='row']";
 		internal const string CHECK_TERM_XPATH = "//span[@class='bog']/span";
 		internal const string CHECK_TEXT_XPATH = "//div[@class='xT']/span";

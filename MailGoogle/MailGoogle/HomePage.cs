@@ -8,18 +8,9 @@ namespace MailGoogle
 		{
 			
 		}
-
-		public LoginPage OpenLoginPage()
-		{
-			FindElementWhithWaiter(XPathGoogle.SITE_EMAIL_XPATH).Click();
-			return new LoginPage(_driverGoogle);
-		}	
-		
 		public string GetUrl()
 		{
 			return FindElementWhithWaiter(XPathGoogle.SITE_NAME_POST_XPATH).Text;
-		}
-
-		
+		}		
 	}
 }

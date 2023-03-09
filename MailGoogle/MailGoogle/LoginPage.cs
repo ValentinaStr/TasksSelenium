@@ -11,6 +11,11 @@ namespace MailGoogle
 			
 		}
 
+		public void Login(string email, string password)
+		{
+			InputEmailInLogin(email);
+			InputPasswordInLogin(password);
+		}
 		public void InputEmailInLogin(string email)
 		{
 			FindElementWhithWaiter(XPathGoogle.SITE_LOGIN_EMAIL_XPATH).SendKeys(email);

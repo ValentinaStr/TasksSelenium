@@ -24,7 +24,7 @@ namespace MailGoogle
 			loginPage001.InputEmailInLogin(firstMail);
 			loginPage001.InputPasswordInLogin(password);
 			AccountMail mail001 = new AccountMail(driverGoogle);
-			mail001.SwithToFrame();
+			mail001.SwithFrame();
 			var r = mail001.GetUserName();
 			Letter newLetter = mail001.OpenNewLetter();
 			newLetter.CreateNewLetter(seccondMail, termNewLetter, textNewLetter);
