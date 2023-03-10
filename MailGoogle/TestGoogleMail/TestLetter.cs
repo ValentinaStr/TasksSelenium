@@ -8,7 +8,7 @@ namespace TestGoogleMail
 	public class TestLetter
 	{
 		private IWebDriver _driverGoogle;
-
+		
 		[TestInitialize]
 		public void BeforeTest()
 		{
@@ -20,7 +20,6 @@ namespace TestGoogleMail
 		{
 			_driverGoogle.Close();
 		}
-
 		[TestMethod]
 		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "TSelenium102@gmail.com", "*)**summer**(*", "*sun*", "*worm*")]
 		public void TestMail(string firstMail,
@@ -40,7 +39,7 @@ namespace TestGoogleMail
 			loginPage.Login(firstMail, password);
 			AccountMail mail = home.OpenAccountMailPage();
 			Letter newLetter = mail.OpenNewLetter();
-			newLetter.CreateNewLetter(secondMail, termNewLetter, textNewLetter);
+			newLetter.CreateNewLetterAndSend(secondMail, termNewLetter, textNewLetter);
 			Thread.Sleep(600);
 			mail.Exit();
 
@@ -106,9 +105,9 @@ namespace TestGoogleMail
 			loginPage.Login(firstMail, password);
 			AccountMail mail101 = home.OpenAccountMailPage();
 			Letter newLetter = mail101.OpenNewLetter();
-			newLetter.CreateNewLetter(secondMail, termNewLetter, textNewLetter);
+			newLetter.CreateNewLetterAndSend(secondMail, termNewLetter, textNewLetter);
 			mail101.Exit();
-
+			Thread.Sleep(300);
 			home.OpenLoginPage();
 			loginPage.RefreshCookies(nameCookies);
 			loginPage.Login(secondMail, password);
@@ -130,6 +129,7 @@ namespace TestGoogleMail
 			Letter newLetter = mail.OpenNewLetter();
 			newLetter.CreateNewLetter(secondMail, termNewLetter, textNewLetter);
 			mail.WaitLetterWithTerm(termNewLetter);
+			Thread.Sleep(200);
 			var counterNewLetter = mail.GetCounterNewLetter();
 			Assert.IsNotNull(counterNewLetter);
 		}
@@ -144,14 +144,15 @@ namespace TestGoogleMail
 			AccountMail mail = home.OpenAccountMailPage();
 			var counterNewLetter1 = mail.GetCounterNewLetter();
 			Letter newLetter = mail.OpenNewLetter();
-			newLetter.CreateNewLetter(secondMail, termNewLetter, textNewLetter);
+			newLetter.CreateNewLetterAndSend(secondMail, termNewLetter, textNewLetter);
 			mail.WaitLetterWithTerm(termNewLetter);
+			Thread.Sleep(200);
 			var counterNewLetter2 = mail.GetCounterNewLetter();
 			Assert.IsFalse(counterNewLetter2 == counterNewLetter1);
 		}
 
 		[TestMethod]
-		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "TSelenium101@gmail.com", "Hi", "How are you?")]
+		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "Hi", "How are you?")]
 		public void CheckDraftSavePositive(string firstMail, string password, string termNewLetter, string textNewLetter)
 		{
 			HomePage home = new HomePage(_driverGoogle);
@@ -161,9 +162,12 @@ namespace TestGoogleMail
 			Letter newLetter = mail.OpenNewLetter();
 			newLetter.CreateNewLetter(firstMail, termNewLetter, textNewLetter);
 			newLetter.ClosedNewLetter();
-			newLetter.ClosedNewLetter();
-
-
+			mail.OpenMoreMenu();
+			mail.OpenDraftPage();
+			Thread.Sleep(500);
+			var t = mail.Check();
+			Assert.AreEqual(termNewLetter, t);
 		}
+
 	}
 }

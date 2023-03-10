@@ -7,12 +7,19 @@ namespace MailGoogle
 		public Letter (IWebDriver _driverGoogle) : base(_driverGoogle)
 		{
 		}
-		public void CreateNewLetter(string adress, string term, string text)
+		public void CreateNewLetterAndSend(string adress, string term, string text)
 		{
 			InputNewLetterAddress(adress);
 			InputNewLetterTerm(term);
 			InputTextNewLetter(text);
 			SendNewLetter();
+		}
+
+		public void CreateNewLetter(string adress, string term, string text)
+		{
+			InputNewLetterAddress(adress);
+			InputNewLetterTerm(term);
+			InputTextNewLetter(text);
 		}
 
 		public void InputNewLetterAddress(string address)
@@ -59,5 +66,6 @@ namespace MailGoogle
 		{
 			FindElementWhithWaiter(XPathGoogle.SITE_CLOSED_NEW_LETTER_XPATH).Click();
 		}
+		
 	}
 }

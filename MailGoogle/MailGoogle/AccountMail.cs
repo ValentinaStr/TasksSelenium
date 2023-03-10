@@ -8,6 +8,7 @@ namespace MailGoogle
 	{
 		IList<IWebElement> listLetters;
 		const int STOPWATCH = 60000;
+		IAlert alert;
 
 		public AccountMail(IWebDriver _driverGoogle) : base(_driverGoogle)
 		{
@@ -18,6 +19,17 @@ namespace MailGoogle
 			SwithToFrame();
 			return FindElementWhithWaiter(XPathGoogle.SITE_USER_NAME_XPATH).Text;
 		}
+
+		public void OpenMoreMenu()
+		{
+			FindElementWhithWaiter(XPathGoogle.SITE_MENU_BUTTON_MORE_XPATH).Click();
+		}
+
+		public void OpenDraftPage()
+		{
+			FindElementsWhithWaiter(XPathGoogle.SITE_ALL_MENU_XPATH)[7].Click();
+		}
+
 		public void WaitLetterWithTermAndText(string termLetter, string textLetter)
 		{
 			Stopwatch stopwatch = new Stopwatch();
@@ -64,6 +76,12 @@ namespace MailGoogle
 			catch { return "no letter"; }
 		}
 
+		public string Check()
+		{
+			try { return FindElementWhithWaiter(XPathGoogle.S).Text; }
+			catch { return "no letter"; }
+		}
+
 		public string CheckTextLetter()
 		{
 			try
@@ -73,18 +91,44 @@ namespace MailGoogle
 			}
 			catch { return "no letter"; }
 		}
-		public void Exit()
-		{
-			_wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPathGoogle.SITE_CHECK_SEND_LETTER)));
-			SwithToFrame();
-			FindElementsWhithWaiter(XPathGoogle.SITE_ACCOUNT_EXIT_XPATH)[1].Click();
-		}
 
 		public string GetCounterNewLetter()
 		{
-			return FindElementWhithWaiter(XPathGoogle.SITE_EMAIL_COUNTER_NEW_LETTER).Text;
+			return FindElementWhithWaiter(XPathGoogle.SITE_EMAIL_COUNTER_NEW_LETTER_XPATH).Text;
 		}
-
-		//public ReadOnlyCollection<IWebElement> 
+		public Letter OpenNewLetter()
+		{
+			FindElementWhithWaiter(XPathGoogle.SITE_OPEN_NEW_LETTER_XPATH).Click();
+			return new Letter(_driverGoogle);
+		}
+		public Letter OpenAnswerLetter()
+		{
+			FindElementWhithWaiter(XPathGoogle.SITE_LETTER_ANSWER_XPATH).Click();
+			return new Letter(_driverGoogle);
+		}
+		public void Exit()
+		{
+			try
+			{
+				//_wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPathGoogle.SITE_CHECK_SEND_LETTER)));
+				SwithToFrame();
+				Thread.Sleep(500);
+				FindElementsWhithWaiter(XPathGoogle.SITE_ACCOUNT_EXIT_XPATH)[1].Click();
+			}
+			catch (UnhandledAlertException f)
+			{
+				try
+				{
+					alert = _driverGoogle.SwitchTo().Alert();
+					String alertText = alert.Text; ;
+					Console.WriteLine("Alert data: " + alertText);
+					alert.Accept();
+				}
+				catch (NoAlertPresentException e)
+				{
+					//e.StackTrace;
+				}
+			}
+		}
 	}
 }

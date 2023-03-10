@@ -26,7 +26,7 @@ namespace MailGoogle
 			mail001.SwithToFrame();
 			var r = mail001.GetUserName();
 			Letter newLetter = mail001.OpenNewLetter();
-			newLetter.CreateNewLetter(seccondMail, termNewLetter, textNewLetter);
+			newLetter.CreateNewLetterAndSend(seccondMail, termNewLetter, textNewLetter);
 			mail001.Exit();
 
 			//2

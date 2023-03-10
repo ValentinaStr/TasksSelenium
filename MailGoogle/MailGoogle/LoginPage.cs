@@ -27,6 +27,7 @@ namespace MailGoogle
 			FindElementWhithWaiter(XPathGoogle.SITE_LOGIN_PASSWORD_XPATH).SendKeys(password);
 			FindElementWhithWaiter(XPathGoogle.SITE_LOGIN_PASSWORD_NEXT_BUTTON).Click();
 		}
+		
 	}
 }
 
