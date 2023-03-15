@@ -65,7 +65,6 @@ namespace MailGoogle
 
 		public void OpenFirstLetter()
 		{
-			FindElementWhithWaiter(XPathGoogle.SITE_OPEN_FIRST_LETTER_XPATH);
 			listLetters = FindElementsWhithWaiter(XPathGoogle.SITE_OPEN_FIRST_LETTER_XPATH);
 			listLetters[0].Click();
 		}
@@ -75,13 +74,6 @@ namespace MailGoogle
 			try { return FindElementWhithWaiter(XPathGoogle.CHECK_TERM_XPATH).Text; }
 			catch { return "no letter"; }
 		}
-
-		public string Check()
-		{
-			try { return FindElementWhithWaiter(XPathGoogle.S).Text; }
-			catch { return "no letter"; }
-		}
-
 		public string CheckTextLetter()
 		{
 			try
@@ -91,6 +83,12 @@ namespace MailGoogle
 			}
 			catch { return "no letter"; }
 		}
+
+		public string GetTextDraftLetter()
+		{
+			return FindElementWhithWaiter(XPathGoogle.SITE_GET_TEXT_DRAFT_LETTER).Text;
+		}
+
 
 		public string GetCounterNewLetter()
 		{

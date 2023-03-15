@@ -67,5 +67,9 @@ namespace MailGoogle
 			FindElementWhithWaiter(XPathGoogle.SITE_CLOSED_NEW_LETTER_XPATH).Click();
 		}
 		
+		public IWebElement ErrorNewMessageEmail()
+		{
+			return FindElementWhithWaiter(XPathGoogle.SITE_ERROR_MESSAGE_EMAIL);
+		}
 	}
 }

@@ -8,19 +8,22 @@ namespace MailGoogle
 		{
 			GoToUrl("https://www.google.com/intl/ru/gmail/about/");			
 		}
-		public string GetUrl()
+		public string GetNamePost()
 		{
 			return FindElementWhithWaiter(XPathGoogle.SITE_NAME_POST_XPATH).Text;
 		}
+		public IWebElement CheckSignInButton()
+		{
+			return FindElementWhithWaiter(XPathGoogle.SITE_EMAIL_LOGIN_XPATH);
+		}
 		public LoginPage OpenLoginPage()
 		{
-			FindElementWhithWaiter(XPathGoogle.SITE_EMAIL_XPATH).Click();
+			FindElementWhithWaiter(XPathGoogle.SITE_EMAIL_LOGIN_XPATH).Click();
 			return new LoginPage(_driverGoogle);
 		}
 		public AccountMail OpenAccountMailPage()
 		{
 			return new AccountMail(_driverGoogle);
 		}
-
 	}
 }

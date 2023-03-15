@@ -5,7 +5,7 @@ namespace MailGoogle
 {
 	internal static class XPathGoogle
 	{
-		internal const string SITE_EMAIL_XPATH = "//a[@data-action='sign in']";
+		internal const string SITE_EMAIL_LOGIN_XPATH = "//a[@data-action='sign in']";
 		
 		internal const string SITE_NAME_POST_XPATH = "//a[@href='/intl/ru/gmail/about/']";
 		
@@ -28,8 +28,11 @@ namespace MailGoogle
 		internal const string SITE_EMAIL_LIST_NEW_LETTER_XPATH = "//tr[@class='zA zE']";
 		internal const string SITE_ALL_MENU_XPATH = "//a[@class='J-Ke n0']";
 		internal const string SITE_MENU_BUTTON_MORE_XPATH = "/ html / body / div[7] / div[3] / div / div[2] / div[1] / div[2] / div / div / div / div / div / div[2] / div / div / div[2] / span"; //"span[@class='J-Ke n4 ah9 aiu']"; 
-		internal const string S = "/html/body/div[7]/div[3]/div/div[2]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div/div[4]/div[1]/div/table/tbody/tr[1]/td[5]/div/div/div/span/span";
 		
+		internal const string SITE_GET_TEXT_DRAFT_LETTER = "//div[@style='display: block;']";
+
+		
+
 		//Letter
 		internal const string SITE_LETTER_ANSWER_XPATH = "//span[@class='ams bkH']";
 		internal const string SITE_ACCOUNT_EXIT_XPATH = "//div[@class='SedFmc']";
@@ -43,7 +46,7 @@ namespace MailGoogle
 		internal const string SITE_OPEN_LETTER_TEXT_XPATH = "//div[@class='a3s aiL ']/div[1]";
 		internal const string SITE_LETTER_ANSWER_TEXT_XPATH = "//div[@class='Am aO9 Al editable LW-avf tS-tW']";
 		internal const string SITE_LETTER_ANSWER_SEND_XPATH = "//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']";
-		
+		internal const string SITE_ERROR_MESSAGE_EMAIL = "//div[@class='Kj-JD-K7 Kj-JD-K7-bsT']";
 
 
 	}
