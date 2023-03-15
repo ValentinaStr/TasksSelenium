@@ -28,7 +28,7 @@ namespace MailGoogle
 		internal const string SITE_EMAIL_LIST_NEW_LETTER_XPATH = "//tr[@class='zA zE']";
 		internal const string SITE_ALL_MENU_XPATH = "//a[@class='J-Ke n0']";
 		internal const string SITE_MENU_BUTTON_MORE_XPATH = "/ html / body / div[7] / div[3] / div / div[2] / div[1] / div[2] / div / div / div / div / div / div[2] / div / div / div[2] / span"; //"span[@class='J-Ke n4 ah9 aiu']"; 
-		
+		internal const string SITE_LIST_DRAFTS = "//tr[@class='zA yO']";
 		internal const string SITE_GET_TEXT_DRAFT_LETTER = "//div[@style='display: block;']";
 
 		

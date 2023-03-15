@@ -104,6 +104,7 @@ namespace MailGoogle
 			FindElementWhithWaiter(XPathGoogle.SITE_LETTER_ANSWER_XPATH).Click();
 			return new Letter(_driverGoogle);
 		}
+
 		public void Exit()
 		{
 			try
