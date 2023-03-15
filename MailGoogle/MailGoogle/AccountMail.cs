@@ -49,8 +49,8 @@ namespace MailGoogle
 			{
 				try
 				{
-					var term = FindElementWhithWaiter(XPathGoogle.CHECK_TERM_XPATH).Text;
 					FindElementWhithWaiter(XPathGoogle.SITE_RELOAD_MAIL_XPATH).Click();
+					var term = FindElementWhithWaiter(XPathGoogle.CHECK_TERM_XPATH).Text;
 					if (term == termLetter)
 						break;
 				}
@@ -90,9 +90,18 @@ namespace MailGoogle
 		}
 
 
-		public string GetCounterNewLetter()
+		public int GetCounterNewLetter()
 		{
-			return FindElementWhithWaiter(XPathGoogle.SITE_EMAIL_COUNTER_NEW_LETTER_XPATH).Text;
+			try
+			{
+				var countOfNewLetter = FindElementWhithWaiter(XPathGoogle.SITE_EMAIL_COUNTER_NEW_LETTER_XPATH).Text;
+				int countNewletter = Int32.Parse(countOfNewLetter);
+				return countNewletter;
+			}
+			catch
+			{
+				return 0;
+			}
 		}
 		public Letter OpenNewLetter()
 		{
@@ -109,24 +118,14 @@ namespace MailGoogle
 		{
 			try
 			{
-				//_wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPathGoogle.SITE_CHECK_SEND_LETTER)));
+				_wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPathGoogle.SITE_CHECK_SEND_LETTER)));
 				SwithToFrame();
 				Thread.Sleep(500);
 				FindElementsWhithWaiter(XPathGoogle.SITE_ACCOUNT_EXIT_XPATH)[1].Click();
 			}
-			catch (UnhandledAlertException f)
+			catch (UnhandledAlertException)
 			{
-				try
-				{
-					alert = _driverGoogle.SwitchTo().Alert();
-					String alertText = alert.Text; ;
-					Console.WriteLine("Alert data: " + alertText);
-					alert.Accept();
-				}
-				catch (NoAlertPresentException e)
-				{
-					//e.StackTrace;
-				}
+				AcceptAlert();
 			}
 		}
 	}

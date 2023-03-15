@@ -62,8 +62,9 @@ namespace TestGoogleMail
 			loginPage.Login(firstMail, password);
 			mail.WaitLetterWithTerm(termNewLetter);
 			mail.OpenFirstLetter();
+			Thread.Sleep(600);
 			var chekTextAnswer = answerLetter.GetTextLetter();
-			Assert.AreEqual(chekTextAnswer, textAnswer, "Wrong Text answer.");
+			Assert.AreEqual(chekTextAnswer, textAnswer, "Wrong text answer.");
 			Thread.Sleep(600);
 			mail.Exit();
 		}
@@ -135,7 +136,7 @@ namespace TestGoogleMail
 		}
 
 		[TestMethod]
-		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "TSelenium101@gmail.com", "Hello", "How are you?")]
+		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "TSelenium101@gmail.com", "Hello", "Are you?")]
 		public void CheckCounterPlusNewLetterPositive(string firstMail, string password, string secondMail, string termNewLetter, string textNewLetter)
 		{
 			HomePage home = new HomePage(_driverGoogle);
@@ -148,7 +149,7 @@ namespace TestGoogleMail
 			mail.WaitLetterWithTerm(termNewLetter);
 			Thread.Sleep(200);
 			var counterNewLetter2 = mail.GetCounterNewLetter();
-			Assert.IsFalse(counterNewLetter2 == counterNewLetter1);
+			Assert.IsTrue(counterNewLetter2 - counterNewLetter1 == 1);
 		}
 
 		[TestMethod]
@@ -183,7 +184,7 @@ namespace TestGoogleMail
 			Assert.IsNotNull(home.CheckSignInButton());
 		}
 		[TestMethod]
-		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "ERHJHGJKKcom", "*)**summer**(*", "*sun*")]
+		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "ERHJHGJKKcom", "summer", "sun")]
 		public void CheckSendEmailWithWrongEmail(string firstMail,
 							string password,
 							string secondMail,
@@ -201,7 +202,7 @@ namespace TestGoogleMail
 			Assert.IsNotNull(newLetter.ErrorNewMessageEmail());
 		}
 		[TestMethod]
-		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "TSelenium101@gmail.com", "", "*sun*")]
+		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "TSelenium101@gmail.com", "", "sun")]
 		public void CheckSendEmailWithoutTerm(string firstMail,
 							string password,
 							string secondMail,
@@ -214,10 +215,11 @@ namespace TestGoogleMail
 			loginPage.RefreshCookies(nameCookies);
 			loginPage.Login(firstMail, password);
 			AccountMail mail = home.OpenAccountMailPage();
-			Letter newLetter = mail.OpenNewLetter();
-			newLetter.CreateNewLetterAndSend(secondMail, termNewLetter, textNewLetter);
+			Letter letter = mail.OpenNewLetter();
+			letter.CreateNewLetterAndSend(secondMail, termNewLetter, textNewLetter);
 			mail.WaitLetterWithTerm("");
-			var textGetLetter = mail.CheckTextLetter();
+			mail.OpenFirstLetter();
+			var textGetLetter = letter.GetTextLetter();
 			Assert.AreEqual(textNewLetter, textGetLetter);
 		}
 
@@ -237,14 +239,14 @@ namespace TestGoogleMail
 			AccountMail mail = home.OpenAccountMailPage();
 			Letter newLetter = mail.OpenNewLetter();
 			newLetter.CreateNewLetterAndSend(secondMail, termNewLetter, textNewLetter);
-			var textAlert = _driverGoogle.SwitchTo().Alert().Text;
+			var textAlert = mail.GetTextAlert();
 			Assert.IsNotNull(textAlert);
-			_driverGoogle.SwitchTo().Alert().Accept();
+			mail.AcceptAlert();
 		}
 
 
 		[TestMethod]
-		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "TSelenium101@gmail.com", "", "")]
+		[DataRow("TSelenium101@gmail.com", "_SeLeNiuM_", "TSelenium101@gmail.com", "", " ")]
 		public void CheckSendEmailWithoutTermAandText(string firstMail,
 							string password,
 							string secondMail,
@@ -257,12 +259,14 @@ namespace TestGoogleMail
 			loginPage.RefreshCookies(nameCookies);
 			loginPage.Login(firstMail, password);
 			AccountMail mail = home.OpenAccountMailPage();
-			Letter newLetter = mail.OpenNewLetter();
-			newLetter.CreateNewLetterAndSend(secondMail, termNewLetter, textNewLetter);
-			_driverGoogle.SwitchTo().Alert().Accept();
-			mail.WaitLetterWithTerm("");
-			var textGetLetter = mail.CheckTextLetter();
-			Assert.AreEqual(termNewLetter, textGetLetter);
+			Letter letter = mail.OpenNewLetter();
+			letter.CreateNewLetterAndSend(secondMail, termNewLetter, textNewLetter);
+			mail.AcceptAlert();
+			mail.WaitLetterWithTerm(termNewLetter);
+			var termGetLetter =  mail.CHeckTermLetter();
+
+			//var textGetLetter = letter.GetTextLetter();
+			Assert.AreEqual(termNewLetter, termGetLetter);
 		}
 	}
 }

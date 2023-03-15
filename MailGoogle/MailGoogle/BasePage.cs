@@ -49,5 +49,15 @@ namespace MailGoogle
 			_driverGoogle.Navigate().Refresh();
 			Thread.Sleep(100);
 		}
+
+		public void AcceptAlert()
+		{
+			_driverGoogle.SwitchTo().Alert().Accept();
+		}
+
+		public string GetTextAlert()
+		{
+			return _driverGoogle.SwitchTo().Alert().Text;
+		}
 	}
 }
