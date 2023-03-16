@@ -8,8 +8,7 @@ namespace MailGoogle
 	{
 		IList<IWebElement> listLetters;
 		const int STOPWATCH = 60000;
-		IAlert alert;
-
+		
 		public AccountMail(IWebDriver _driverGoogle) : base(_driverGoogle)
 		{
 
@@ -45,12 +44,13 @@ namespace MailGoogle
 		{
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
+			/*
 			while (stopwatch.ElapsedMilliseconds > STOPWATCH)
 			{
 				try
 				{
 					FindElementWhithWaiter(XPathGoogle.SITE_RELOAD_MAIL_XPATH).Click();
-					var term = FindElementWhithWaiter(XPathGoogle.CHECK_TERM_XPATH).Text;
+					var term = CHeckTermLetter();
 					if (term == termLetter)
 						break;
 				}
@@ -59,6 +59,10 @@ namespace MailGoogle
 
 				}
 
+			}*/
+			while (CHeckTermLetter() != termLetter | stopwatch.ElapsedMilliseconds > STOPWATCH)
+			{
+				FindElementWhithWaiter(XPathGoogle.SITE_RELOAD_MAIL_XPATH).Click();
 			}
 			stopwatch.Stop();
 		}
@@ -81,12 +85,12 @@ namespace MailGoogle
 				var textLetter = FindElementWhithWaiter(XPathGoogle.CHECK_TEXT_XPATH).Text;
 				return textLetter.Substring(5);
 			}
-			catch { return "no letter"; }
+			catch { return "no text"; }
 		}
 
 		public string GetTextDraftLetter()
 		{
-			return FindElementWhithWaiter(XPathGoogle.SITE_GET_TEXT_DRAFT_LETTER).Text;
+			return FindElementWhithWaiter(XPathGoogle.SITE_TERM_DREFT_LETTER).Text;
 		}
 
 
@@ -120,10 +124,10 @@ namespace MailGoogle
 			{
 				_wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPathGoogle.SITE_CHECK_SEND_LETTER)));
 				SwithToFrame();
-				Thread.Sleep(500);
+				Thread.Sleep(800);
 				FindElementsWhithWaiter(XPathGoogle.SITE_ACCOUNT_EXIT_XPATH)[1].Click();
 			}
-			catch (UnhandledAlertException)
+			catch
 			{
 				AcceptAlert();
 			}

@@ -59,5 +59,11 @@ namespace MailGoogle
 		{
 			return _driverGoogle.SwitchTo().Alert().Text;
 		}
+
+		public void DismissAlert()
+		{
+			_driverGoogle.SwitchTo().Alert().Dismiss();
+		}
+
 	}
 }
