@@ -1,7 +1,4 @@
-﻿
-using System;
-
-namespace MailGoogle
+﻿namespace MailGoogle
 {
 	internal static class XPathGoogle
 	{
@@ -44,7 +41,5 @@ namespace MailGoogle
 		internal const string SITE_LETTER_ANSWER_TEXT_XPATH = "//div[@class='Am aO9 Al editable LW-avf tS-tW']";
 		internal const string SITE_LETTER_ANSWER_SEND_XPATH = "//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']";
 		internal const string SITE_ERROR_MESSAGE_EMAIL = "//div[@class='Kj-JD-K7 Kj-JD-K7-bsT']";
-
-
 	}
 }
