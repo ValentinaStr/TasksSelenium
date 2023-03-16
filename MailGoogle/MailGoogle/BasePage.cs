@@ -10,13 +10,13 @@ namespace MailGoogle
 	{
 		protected IWebDriver _driverGoogle;
 		protected WebDriverWait _wait;
-		const int WaitTime = 30;
-		const string nameFrameAccount = "account";
+		const int WAITTIME = 30;
+		const string NAMEFRAMEACCOUNT = "account";
 
 		public BasePage(IWebDriver driverGoogle)
 		{
 			_driverGoogle = driverGoogle;
-			_wait = new WebDriverWait(_driverGoogle, TimeSpan.FromSeconds(WaitTime));
+			_wait = new WebDriverWait(_driverGoogle, TimeSpan.FromSeconds(WAITTIME));
 		}
 		
 		public void GoToUrl(string url)
@@ -39,7 +39,7 @@ namespace MailGoogle
 		{
 			FindElementWhithWaiter(XPathGoogle.SITE_OPEN_ACCOUNT_XPATH).Click();
 			Thread.Sleep(100);
-			_driverGoogle.SwitchTo().Frame(nameFrameAccount);
+			_driverGoogle.SwitchTo().Frame(NAMEFRAMEACCOUNT);
 		}
 
 
