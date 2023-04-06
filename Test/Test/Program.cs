@@ -17,7 +17,7 @@
 			Console.WriteLine(information3);
 			var Empl = new Employee().GetInformation();
 			Console.WriteLine(Empl);
-			*/
+			
 
 			string s = "one";
 			string r = s;
@@ -46,5 +46,25 @@
 		public class Me : Employee
 		{
 			public override string GetInformation() => "I am";
+		}*/
+
+			var information = new Employee().Name == Person.Name;
+			Console.WriteLine(Person.Name);
 		}
+
+		public abstract class Person
+		{
+			public static string Name = "Not defined";
+			public Person() => Name = GetInformation();
+			public abstract string GetInformation();
+		}
+
+		public class Employee : Person
+		{
+			public string Name = "I am an employee";
+			//public Employee() => Name = "I am an employee";
+			public override string GetInformation() => Name;
+		}
+		
+	}	
 }

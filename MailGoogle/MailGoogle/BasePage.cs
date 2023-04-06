@@ -19,18 +19,18 @@ namespace MailGoogle
 			_wait = new WebDriverWait(_driverGoogle, TimeSpan.FromSeconds(WAITTIME));
 		}
 		
-		public void GoToUrl(string url)
+		protected void GoToUrl(string url)
 		{
 			_driverGoogle.Url = url;
 			_driverGoogle.Manage().Window.Maximize();
 		}	
 
-		public IWebElement FindElementWhithWaiter(string xpath)
+		protected IWebElement FindElementWhithWaiter(string xpath)
 		{
 			return _wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
 		}
 
-		public ReadOnlyCollection<IWebElement> FindElementsWhithWaiter(string xpath)
+		protected ReadOnlyCollection<IWebElement> FindElementsWhithWaiter(string xpath)
 		{
 			return _wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(By.XPath(xpath)));
 		}

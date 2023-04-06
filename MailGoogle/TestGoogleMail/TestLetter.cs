@@ -39,7 +39,6 @@ namespace TestGoogleMail
 			AccountMail mail = home.OpenAccountMailPage();
 			Letter newLetter = mail.OpenNewLetter();
 			newLetter.CreateNewLetterAndSend(secondMail, termNewLetter, textNewLetter);
-			Thread.Sleep(600);
 			mail.Exit();
 
 			//2
@@ -51,19 +50,16 @@ namespace TestGoogleMail
 			Assert.AreEqual(termNewLetter, termNewLetter, "Wrong email subject");
 			Assert.AreEqual(textNewLetter, textNewLetter, "Wrong text letter");
 			Letter answerLetter = mail.OpenAnswerLetter();
-			answerLetter.CreateAnswerLetter(textAnswer);
-			Thread.Sleep(600);
+			answerLetter.CreateAnswerLetter(textAnswer);			
 			mail.Exit();
 
 			//3
 			loginPage.RefreshCookies(nameCookies);
 			loginPage.Login(firstMail, password);
 			mail.WaitLetterWithTerm(termNewLetter);
-			mail.OpenFirstLetter();
-			Thread.Sleep(600);
+			mail.OpenFirstLetter();			
 			var chekTextAnswer = answerLetter.GetTextLetter();
-			Assert.AreEqual(chekTextAnswer, textAnswer, "Wrong text answer.");
-			Thread.Sleep(600);
+			Assert.AreEqual(chekTextAnswer, textAnswer, "Wrong text answer.");			
 			mail.Exit();
 		}
 
@@ -106,7 +102,6 @@ namespace TestGoogleMail
 			Letter newLetter = mail101.OpenNewLetter();
 			newLetter.CreateNewLetterAndSend(secondMail, termNewLetter, textNewLetter);
 			mail101.Exit();
-			Thread.Sleep(300);
 			home.OpenLoginPage();
 			loginPage.RefreshCookies(nameCookies);
 			loginPage.Login(secondMail, password);
@@ -128,7 +123,6 @@ namespace TestGoogleMail
 			Letter newLetter = mail.OpenNewLetter();
 			newLetter.CreateNewLetterAndSend(secondMail, termNewLetter, textNewLetter);
 			mail.WaitLetterWithTerm(termNewLetter);
-			Thread.Sleep(200);
 			var counterNewLetter = mail.GetCounterNewLetter();
 			Assert.IsNotNull(counterNewLetter);
 		}
@@ -144,7 +138,6 @@ namespace TestGoogleMail
 			var counterNewLetter1 = mail.GetCounterNewLetter();
 			Letter newLetter = mail.OpenNewLetter();
 			newLetter.CreateNewLetterAndSend(secondMail, termNewLetter, textNewLetter);
-			Thread.Sleep(200);
 			mail.WaitLetterWithTerm(termNewLetter);
 			var counterNewLetter2 = mail.GetCounterNewLetter();
 			Assert.IsTrue((counterNewLetter2 - counterNewLetter1) == 1);
@@ -163,7 +156,6 @@ namespace TestGoogleMail
 			newLetter.ClosedNewLetter();
 			mail.OpenMoreMenu();
 			mail.OpenDraftPage();
-			Thread.Sleep(2000);
 			var textDraft = mail.GetTextDraftLetter();
 			Assert.AreEqual(termNewLetter, textDraft);
 		}
@@ -176,7 +168,6 @@ namespace TestGoogleMail
 			LoginPage loginPage = home.OpenLoginPage();
 			loginPage.Login(firstMail, password);
 			AccountMail mail = home.OpenAccountMailPage();
-			Thread.Sleep(100);
 			mail.Exit();
 			Assert.IsNotNull(home.CheckSignInButton());
 		}
