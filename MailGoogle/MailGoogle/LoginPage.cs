@@ -8,7 +8,6 @@ namespace MailGoogle
 		{
 			
 		}
-
 		public void Login(string email, string password)
 		{
 			InputEmailInLogin(email);
@@ -16,14 +15,13 @@ namespace MailGoogle
 		}
 		public void InputEmailInLogin(string email)
 		{
-			FindElementWhithWaiter(XPathGoogle.SITE_LOGIN_EMAIL_XPATH).SendKeys(email);
-			FindElementWhithWaiter(XPathGoogle.SITE_LOGIN_EMAIL_NEXT_BUTTON_XPATH).Click();
+			FindElementWithWaiter(XPathGoogle.SITE_LOGIN_EMAIL_XPATH).SendKeys(email);
+			FindElementWithWaiter(XPathGoogle.SITE_LOGIN_EMAIL_NEXT_BUTTON_XPATH).Click();
 		}
-
 		public void InputPasswordInLogin(string password)
 		{
-			FindElementWhithWaiter(XPathGoogle.SITE_LOGIN_PASSWORD_XPATH).SendKeys(password);
-			FindElementWhithWaiter(XPathGoogle.SITE_LOGIN_PASSWORD_NEXT_BUTTON).Click();
+			FindElementWithWaiter(XPathGoogle.SITE_LOGIN_PASSWORD_XPATH).SendKeys(password);
+			FindElementWithWaiter(XPathGoogle.SITE_LOGIN_PASSWORD_NEXT_BUTTON).Click();
 		}		
 	}
 }

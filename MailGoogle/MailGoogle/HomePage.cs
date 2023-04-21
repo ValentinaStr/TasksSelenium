@@ -6,19 +6,19 @@ namespace MailGoogle
 	{
 		public HomePage(IWebDriver _driverGoogle) : base(_driverGoogle)
 		{
-			GoToUrl("https://www.google.com/intl/ru/gmail/about/");			
+			GoToUrl("https://www.google.com/intl/ru/gmail/about/");
 		}
 		public string GetNamePost()
 		{
-			return FindElementWhithWaiter(XPathGoogle.SITE_NAME_POST_XPATH).Text;
+			return FindElementWithWaiter(XPathGoogle.SITE_NAME_POST_XPATH).Text;
 		}
 		public IWebElement CheckSignInButton()
 		{
-			return FindElementWhithWaiter(XPathGoogle.SITE_EMAIL_LOGIN_XPATH);
+			return FindElementWithWaiter(XPathGoogle.SITE_EMAIL_LOGIN_XPATH);
 		}
 		public LoginPage OpenLoginPage()
 		{
-			FindElementWhithWaiter(XPathGoogle.SITE_EMAIL_LOGIN_XPATH).Click();
+			FindElementWithWaiter(XPathGoogle.SITE_EMAIL_LOGIN_XPATH).Click();
 			return new LoginPage(_driverGoogle);
 		}
 		public AccountMail OpenAccountMailPage()

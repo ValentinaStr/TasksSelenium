@@ -81,7 +81,6 @@ namespace TestGoogleMail
 			LoginPage loginPage = home.OpenLoginPage();
 			loginPage.Login(firstMail, password);
 			AccountMail mail101 = home.OpenAccountMailPage();
-			Thread.Sleep(100);
 			var nameUserActual = mail101.GetUserName();
 			Assert.AreEqual(nameUserExpected, nameUserActual);
 		}

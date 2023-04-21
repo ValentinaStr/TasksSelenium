@@ -1,5 +1,4 @@
-﻿
-using OpenQA.Selenium.Support.UI;
+﻿using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
 using SeleniumExtras.WaitHelpers;
 using System.Collections.ObjectModel;
@@ -25,23 +24,22 @@ namespace MailGoogle
 			_driverGoogle.Manage().Window.Maximize();
 		}	
 
-		protected IWebElement FindElementWhithWaiter(string xpath)
+		protected IWebElement FindElementWithWaiter(string xpath)
 		{
 			return _wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
 		}
 
-		protected ReadOnlyCollection<IWebElement> FindElementsWhithWaiter(string xpath)
+		protected ReadOnlyCollection<IWebElement> FindElementsWithWaiter(string xpath)
 		{
 			return _wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(By.XPath(xpath)));
 		}
 
 		public void SwithToFrame()
 		{
-			FindElementWhithWaiter(XPathGoogle.SITE_OPEN_ACCOUNT_XPATH).Click();
+			FindElementWithWaiter(XPathGoogle.SITE_OPEN_ACCOUNT_XPATH).Click();
 			Thread.Sleep(100);
 			_driverGoogle.SwitchTo().Frame(NAMEFRAMEACCOUNT);
 		}
-
 
 		public void RefreshCookies(string nameCookies)
 		{

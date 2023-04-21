@@ -49,7 +49,6 @@ namespace MailGoogle
 			mail001.WaitLetterWithTerm(termNewLetter);
 			mail001.OpenFirstLetter();
 			var textAnswerFor1 =  answerLetter.GetTextLetter();
-
 			Console.WriteLine(textAnswerFor1);
 
 			driverGoogle.Close();
